@@ -11,12 +11,65 @@ import (
 // all  to lowercase  if the key is ascii .
 type Keyword map[string]interface{}
 
+
+
+// unpack  the serialized  keymap from a file  named  Keymap.Dat
+func  UnpackKeymap(set Keyword) error {
+	file,err:= os.OpenFile("Keymap.Dat",0,0666)
+	if err != nil {
+		fmt.Println("open file error :",err)
+		os.Exit(-1)
+	}
+	u :=make([]byte,0)
+	dec := gob.NewDecoder(file)
+	err = dec.Decode(&u)
+	if err != nil {
+		fmt.Println("gob decode error :",err)
+		os.Exit(-1)
+	}
+	err = json.Unmarshal(u,&set)
+
+	if err !=nil {
+		fmt.Println("unpack from  json error :",err)
+		os.Exit(-1)
+	}
+
+
+
+	return nil
+}
+
+// pack  the keymap   serialized to file  named Keymap.Dat
+//  to  save the map to file   when  the progrem  restart  can load  into memory .
+func  Packkeymap(set Keyword) error {
+	file ,err := os.Create("Keymap.Dat")
+	defer  file.Close()
+	if err != nil {
+		fmt.Println("create file error:",err)
+		os.Exit(-1)
+	}
+
+	v,err := json.Marshal(set)
+	if err != nil {
+		fmt.Println("trans to json error",err)
+		os.Exit(-1)
+	}
+	enc := gob.NewEncoder(file)
+	err = enc.Encode(v)
+	if err != nil {
+		fmt.Println("gob serialized error :",err)
+		os.Exit(-1)
+	}
+	return nil
+}
+
+
+
 // give  a string  to find  whether  it contains  a  keyword  build  into keymap .
 //  only  get the first Keyword  in keymap then return.
 //exp :
 //  Buildkeymap(set, "abc")
 //  Search (set ,"abcsdabcfdsfasdfa")  --> (true "abc") get the first "abc"
-
 func Search (set Keyword,str string) (find bool,  key string) {
 	slc :=make([]string,0)
 	str = strings.TrimSpace(str)
