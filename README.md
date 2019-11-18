@@ -23,12 +23,15 @@ dfs is一个 快速检索的 项目.
 
 buildkeymap --> map[strig]interface{} 
 
-Add    合并两个  keyemap , 如果分别包含相同的 分支, 则会忽略掉.   Add(set, keymap) . 
+Add    合并两个  keyemap , 如果分别包含相同的 分支, 则会忽略掉.  
+          Add(set, keymap) . 
           为了可以实现并行化, 增加的参数. 
           
 buildkeymap   可以 从关键字  --->  keymap结构.  
 
-search      search(set,string) 从string 中检索  Set 中的关键字. 如果存在 .return (ｔｒｕｅ，　ｓｔｒｉｎｇ）　　返回对应的ｋｅｙｗｏｒｄ　．　
+search      search(set,string) 从string 中检索  Set 中的关键字.
+                              如果存在 .return (ｔｒｕｅ，　ｓｔｒｉｎｇ）　　
+                              返回对应的ｋｅｙｗｏｒｄ　．　
 
 ｅｘｐ：　　　ｓｅｔ　：＝　ｂｕｉｌｄｋｅｙｍａｐ（ｓｅｔ，　＂ａｂｃ＂）　　
             ｓｅａｒｃｈ　（ｓｅｔ　，　＂abcdef") ---> (true, "abc")  
@@ -39,12 +42,17 @@ search      search(set,string) 从string 中检索  Set 中的关键字. 如果�
 Buildkeymap  :  var  set  Keyword 
                 Buildkeymap (set , string)  --> map[string]interface{} 
                 
- exp :    buildkeymap(set,"abcdef") --> map["a":map["b":map["c":map["d":map["e":map["f":map["\x00":"abceef"]]]]]]]]
+ exp :    buildkeymap(set,"abcdef") -->
+                    map["a":map["b":map["c":map["d":map["e":map["f":map["\x00":"abceef"]]]]]]]]
  
  
 
-Add  :    Add(set , keymap) -->  add  keymap( map[string]interface{} )  to  Set (map[string]interface{} ) 
+Add  :    Add(set , keymap) --> 
 
-Search  :  Search(set Keyword ,str string )  ( bool, string)   : from  the string  to search a keyword in set . 
+add  keymap( map[string]interface{} )  to  Set (map[string]interface{} ) 
+
+Search  :  Search(set Keyword ,str string )  ( bool, string)   :
+
+from  the string  to search a keyword in set . 
 
 
